@@ -1,16 +1,16 @@
 import './app.css';
+import Header from "../header";
+import Footer from "../footer";
 
 function App() {
-
-    const test = () => {
-        throw new Error("ОШИБКА!!!!!!!!!!");
-    }
-
     return (
-        <div className="App">
-            <h1>Hello from App!!!</h1>
-            <button onClick={test}>CLick me!</button>
-        </div>
+        <>
+            <Header/>
+            <div className="App">
+                <h1>Hello from App!!!</h1>
+            </div>
+            <Footer/>
+        </>
     );
 }
 
