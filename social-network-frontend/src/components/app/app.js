@@ -1,11 +1,17 @@
 import './app.css';
 
 function App() {
-  return (
-    <div className="App">
-      <h1>Hello from App!!!</h1>
-    </div>
-  );
+
+    const test = () => {
+        throw new Error("ОШИБКА!!!!!!!!!!");
+    }
+
+    return (
+        <div className="App">
+            <h1>Hello from App!!!</h1>
+            <button onClick={test}>CLick me!</button>
+        </div>
+    );
 }
 
 export default App;

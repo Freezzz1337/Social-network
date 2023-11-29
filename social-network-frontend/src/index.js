@@ -1,11 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import {BrowserRouter as Router} from "react-router-dom"
 import './index.css';
 import App from "./components/app";
+import ErrorBoundary from "./components/error-boundary";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App/>
-  </React.StrictMode>
+    <React.StrictMode>
+        <ErrorBoundary>
+            <Router>
+                <App/>
+            </Router>
+        </ErrorBoundary>
+    </React.StrictMode>
 );
