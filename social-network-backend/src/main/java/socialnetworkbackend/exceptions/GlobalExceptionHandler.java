@@ -1,0 +1,56 @@
+package socialnetworkbackend.exceptions;
+
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.security.SignatureException;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ProblemDetail;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.AccountStatusException;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+    @ExceptionHandler(BadCredentialsException.class)
+    public ProblemDetail handleBadCredentialsException(BadCredentialsException exception) {
+        return createProblemDetail(HttpStatusCode.valueOf(401), exception.getMessage(), "The username or password is incorrect");
+    }
+
+    @ExceptionHandler(AccountStatusException.class)
+    public ProblemDetail handleAccountStatusException(AccountStatusException exception) {
+        return createProblemDetail(HttpStatusCode.valueOf(403), exception.getMessage(), "The account is locked");
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ProblemDetail handleAccessDeniedException(AccessDeniedException exception) {
+        return createProblemDetail(HttpStatusCode.valueOf(403), exception.getMessage(), "You are not authorized to access this resource");
+    }
+
+    @ExceptionHandler(SignatureException.class)
+    public ProblemDetail handleSignatureException(SignatureException exception) {
+        return createProblemDetail(HttpStatusCode.valueOf(403), exception.getMessage(), "The JWT signature is invalid");
+    }
+
+    @ExceptionHandler(ExpiredJwtException.class)
+    public ProblemDetail handleExpiredJwtException(ExpiredJwtException exception) {
+        return createProblemDetail(HttpStatusCode.valueOf(403), exception.getMessage(), "The JWT token has expired");
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ProblemDetail handleGenericException(Exception exception) {
+        return createProblemDetail(HttpStatusCode.valueOf(500), exception.getMessage(), "Unknown internal server error.");
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ProblemDetail handleTest(Exception exception) {
+        return createProblemDetail(HttpStatus.CONFLICT, exception.getMessage(), "A user with this email address already exists");
+    }
+
+    private ProblemDetail createProblemDetail(HttpStatusCode status, String detail, String description) {
+        ProblemDetail errorDetail = ProblemDetail.forStatusAndDetail(status, detail);
+        errorDetail.setProperty("description", description);
+        return errorDetail;
+    }
+}

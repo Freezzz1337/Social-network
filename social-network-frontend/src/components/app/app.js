@@ -11,7 +11,7 @@ function App() {
         <>
             {/*<Header/>*/}
 
-            <Registration/>
+            {/*<Registration/>*/}
             {/*<Authorization/>*/}
 
             {/*<Footer/>*/}
