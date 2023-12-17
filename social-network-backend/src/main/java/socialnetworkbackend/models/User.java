@@ -32,7 +32,7 @@ public class User implements UserDetails {
     private String password;
 
     @Lob
-    @Column(name = "avatar")
+    @Column(name = "avatar",columnDefinition = "longblob")
     private byte[] avatar;
 
     @Column(name = "create_at")

@@ -1,5 +1,6 @@
 package socialnetworkbackend.controllers;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import socialnetworkbackend.dto.LoginUserDto;
 import socialnetworkbackend.dto.RegisterUserDto;
+import socialnetworkbackend.dto.RegisterUserResponseDto;
 import socialnetworkbackend.models.User;
 import socialnetworkbackend.dto.LoginResponseDto;
 import socialnetworkbackend.services.AuthenticationService;
@@ -27,9 +29,9 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
-        User registeredUser = authenticationService.signup(registerUserDto);
-        return ResponseEntity.ok(registeredUser);
+    public ResponseEntity<RegisterUserResponseDto> register(@RequestBody RegisterUserDto registerUserDto) {
+        authenticationService.signup(registerUserDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new RegisterUserResponseDto());
     }
 
     @PostMapping("/login")

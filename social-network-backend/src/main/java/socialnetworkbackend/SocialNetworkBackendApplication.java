@@ -20,18 +20,18 @@ public class SocialNetworkBackendApplication {
 		return Base64.getEncoder();
 	}
 
-//	@Bean
-//	public WebMvcConfigurer corsConfigurer() {
-//		return new WebMvcConfigurer() {
-//			@Override
-//			public void addCorsMappings(CorsRegistry registry) {
-//				registry.addMapping("/**")
-//						.allowedOrigins("http://localhost:3000")
-//						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS","PATCH")
-//						.allowedHeaders("*")
-//						.allowCredentials(true)
-//						.maxAge(3600);
-//			}
-//		};
-//	}
+	@Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/**")
+						.allowedOrigins("http://localhost:3000")
+						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS","PATCH")
+						.allowedHeaders("*")
+						.allowCredentials(true)
+						.maxAge(3600);
+			}
+		};
+	}
 }
