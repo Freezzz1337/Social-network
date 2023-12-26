@@ -99,8 +99,11 @@ const Registration = () => {
 
                                         <Form.Group className="mb-4">
                                             <Form.Label>Choose your avatar</Form.Label>
-                                            <Form.Control type="file" accept="image/*" className="form-control-lg"
-                                                          name="avatar" onChange={handleChange}/>
+                                            <Form.Control type="file"
+                                                          accept="image/*"
+                                                          className="form-control-lg"
+                                                          name="avatar"
+                                                          onChange={handleChange}/>
                                         </Form.Group>
 
                                         {error &&

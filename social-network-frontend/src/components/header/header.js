@@ -1,10 +1,13 @@
 import {Button, Container, Modal, Nav, Navbar} from "react-bootstrap";
 import {useAuth} from "../../context/auth-context";
 import {useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 const Header = () => {
     const [show, setShow] = useState(false);
     const {logout} = useAuth();
+
+    const navigate = useNavigate();
 
     const handleLogoutClick = () => {
         setShow(true);
@@ -18,19 +21,24 @@ const Header = () => {
         logout();
     }
 
+    const handleCreatePost = () => {
+        navigate("/createPost");
+    }
+
     return (
         <>
             <Navbar bg="dark" variant="dark" expand="lg">
                 <Container>
-                    <Navbar.Brand href="#home">My Social Network</Navbar.Brand>
+                    <Navbar.Brand>My Social Network</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                     <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
                         <Nav className="ml-auto">
-                            <Nav.Link href="#home">Home</Nav.Link>
-                            <Nav.Link href="#explore">Explore</Nav.Link>
-                            <Nav.Link href="#notifications">Notifications</Nav.Link>
-                            <Nav.Link href="#profile">Profile</Nav.Link>
-                            <Nav.Link href="#logout" onClick={handleLogoutClick}>Log out</Nav.Link>
+                            <Nav.Link>Home</Nav.Link>
+                            <Nav.Link>Explore</Nav.Link>
+                            <Nav.Link>Notifications</Nav.Link>
+                            <Nav.Link onClick={handleCreatePost}>Create Post</Nav.Link>
+                            <Nav.Link>Profile</Nav.Link>
+                            <Nav.Link onClick={handleLogoutClick}>Log out</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>

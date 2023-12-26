@@ -8,9 +8,9 @@ const authorizationValidation = (formData) => {
         errors.password = "The password field should not be empty";
     }
 
-    if (formData.password.length < 8) {
-        errors.password = "The password must be at least 8 characters";
-    }
+    // if (formData.password.length < 8) {
+    //     errors.password = "The password must be at least 8 characters";
+    // }
 
     return errors;
 }

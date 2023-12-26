@@ -5,9 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.sql.Timestamp;
-import java.util.List;
 
 @Entity
 @Table(name = "post")
@@ -27,10 +25,11 @@ public class Post {
     @Column(name = "create_at")
     private Timestamp create_at;
 
+    @Lob
+    @Column(name = "image",columnDefinition="LONGBLOB")
+    private byte[] image;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    private List<PostImage> postImageList;
 }

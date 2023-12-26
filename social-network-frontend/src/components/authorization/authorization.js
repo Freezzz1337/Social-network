@@ -1,8 +1,8 @@
 import {Alert, Button, Container, Form} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import bgPicture from "../../img/bg.jpg";
 import icon from "../../img/icon.png"
-import {useEffect, useRef, useState} from "react";
+import {useRef, useState} from "react";
 import {authorization} from "../../services/auth-service"
 import {useAuth} from "../../context/auth-context";
 import {authorizationValidation} from "../../util/validation";
@@ -12,7 +12,7 @@ const Authorization = () => {
         email: "",
         password: ""
     });
-
+    const navigate = useNavigate();
     const {login} = useAuth();
     const [error, setError] = useState(null);
     const [validErrors, setValidErrors] = useState({});
@@ -23,18 +23,18 @@ const Authorization = () => {
     }
 
 
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const newValidErrors  = authorizationValidation(formData);
-        setValidErrors(newValidErrors );
+        const newValidErrors = authorizationValidation(formData);
+        setValidErrors(newValidErrors);
 
-        if (Object.keys(newValidErrors ).length === 0) {
+        if (Object.keys(newValidErrors).length === 0) {
             try {
                 const serverResponse = await authorization(JSON.stringify(formData));
                 if (serverResponse.token) {
                     login(serverResponse.token, serverResponse.expiresIn);
+                    navigate("/userProfile");
                 } else {
                     setError(serverResponse.description);
                 }

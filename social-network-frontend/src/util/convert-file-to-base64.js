@@ -3,7 +3,10 @@ export const convertFileToBase64 = (file, callback) => {
 
     reader.onloadend = () => {
         const base64String = reader.result;
-        callback(base64String);
+        const index = base64String.indexOf(",");
+
+        const result = base64String.substring(index + 1);
+        callback(result);
     }
 
     if (file) {

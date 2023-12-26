@@ -12,7 +12,7 @@ import socialnetworkbackend.services.UserService;
 
 import java.util.List;
 
-@RequestMapping("/users")
+@RequestMapping("/user")
 @RestController
 public class UserController {
     private final UserService userService;

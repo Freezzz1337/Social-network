@@ -16,8 +16,8 @@ import socialnetworkbackend.services.JwtService;
 
 import java.util.Base64;
 
-@RequestMapping("/auth")
 @RestController
+@RequestMapping("/auth")
 public class AuthenticationController {
     private final JwtService jwtService;
 

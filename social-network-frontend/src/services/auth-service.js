@@ -10,16 +10,24 @@ const registration = async (formData) => {
         .then(response => response.json());
 }
 
-const _requestOptionsPOST = (formData) => {
+const createNewPost = async (formData, token) => {
+    return await fetch(`${_api}post/create`, _requestOptionsPOST(formData, token))
+        .then(response => response.json());
+}
+
+const _requestOptionsPOST = (formData, token = "") => {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", `Bearer ${token}`);
     return {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
+        headers: myHeaders,
         body: formData
     }
 }
+
 export {
     authorization,
-    registration
+    registration,
+    createNewPost
 };
