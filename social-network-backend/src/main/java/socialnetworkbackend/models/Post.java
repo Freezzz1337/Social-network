@@ -1,5 +1,6 @@
 package socialnetworkbackend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,13 +24,14 @@ public class Post {
     private String caption;
 
     @Column(name = "create_at")
-    private Timestamp create_at;
+    private Timestamp createAt;
 
     @Lob
     @Column(name = "image",columnDefinition="LONGBLOB")
     private byte[] image;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "user_id")
     private User user;
 }

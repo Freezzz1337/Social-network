@@ -4,9 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import socialnetworkbackend.dto.MorePostsDto;
+import socialnetworkbackend.dto.UserMeResponseDto;
 import socialnetworkbackend.models.User;
 import socialnetworkbackend.services.UserService;
 
@@ -22,14 +23,20 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/me")
-    public ResponseEntity<User> authenticatedUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        User currentUser = (User) authentication.getPrincipal();
-
-        return ResponseEntity.ok(currentUser);
+    @GetMapping("/userForProfile")
+    public ResponseEntity<UserMeResponseDto> getUserForProfile(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int size) {
+        return ResponseEntity.ok(userService.getUserForProfile(page, size));
     }
+
+    @GetMapping("/userForProfile/morePosts")
+    public ResponseEntity<List<MorePostsDto>> getMorePosts(
+            @RequestParam int page,
+            @RequestParam(defaultValue = "6") int size) {
+        return ResponseEntity.ok(userService.getMorePosts(page, size));
+    }
+
 
     @GetMapping("/")
     public ResponseEntity<List<User>> allUsers() {

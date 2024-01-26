@@ -1,27 +1,124 @@
-import {Col, Container, Row} from "react-bootstrap";
+import "./user-profile.css";
+import {Button, Card, Col, Container, Image, Row} from "react-bootstrap";
+import React, {useEffect, useState} from "react";
+import {getUserData, getMorePosts} from "../../services/auth-service";
+import {useAuth} from "../../context/auth-context";
+import PostDetails from "../post-details";
 
 const UserProfile = () => {
-    return (
-        <Container>
-          *  {/*<Row className="mt-3">*/}
-            {/*    <Col xs={3}>*/}
-            {/*        <Image src="" roundedCircle fluid />*/}
-            {/*    </Col>*/}
-            {/*    <Col xs={9}>*/}
-            {/*        <h2>{userData.name}</h2>*/}
+    const {token} = useAuth();
+    const [userData, setUserData] = useState(null);
+    const [selectedPost, setSelectedPost] = useState(null);
 
-            {/*    </Col>*/}
-            {/*/!*</Row>/}*/}
+    const [pageAndButton, setPageAndButton] = useState({
+        page: 1,
+        buttonState: true
+    });
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const serverResponse = await getUserData(token);
+            if (serverResponse) {
+                setUserData(serverResponse);
+            }
+        };
+
+        fetchData();
+
+    }, [token]);
+
+    if (!userData) {
+        return <div><h1>Wait a moment!</h1></div>
+    }
+
+    const handleGetMorePosts = async () => {
+        const {page} = pageAndButton;
+        const newPosts = await getMorePosts(token, page);
+
+        if (newPosts && newPosts.length > 0) {
+
+            setUserData({
+                ...userData,
+                postList: [...userData.postList, ...newPosts]
+            });
+
+            setPageAndButton({...pageAndButton, page: (page + 1)});
+        }
+        if (newPosts.length < 6) {
+            setPageAndButton({...pageAndButton, buttonState: false});
+        }
+
+    }
+
+    const handleShowModal = (e, data) => {
+        e.preventDefault();
+
+        if (data) {
+            setSelectedPost(data);
+            document.body.style.overflow = "hidden";
+        }
+    }
+
+
+    return (
+
+        <Container>
+            <Row className="mt-5">
+
+                <Col sm={12} md={12}>
+                    <Row>
+                        <Col sm={12} md={1} className="avatar-container order-md-first first-col">
+                            <div className="avatar-frame">
+                                <Image className="avatar" src={`data:image/jpg;base64, ${userData.avatar}`}/>
+                            </div>
+                        </Col>
+                        <Col sm={12} md={11} className="order-first ">
+                            <h3 className="text-center">{userData.fullName}</h3>
+                            <hr className="text-center"/>
+                        </Col>
+                    </Row>
+                </Col>
+
+                <hr className="mt-3"/>
+                <div className="w-100 mb-2">
+                    <h2 className="text-center ">Posts</h2>
+                </div>
+
+                <Col sm={12} md={8} className="w-100">
+                    <Row xs={1} md={3}>
+                        {userData.postList.map(data => (
+                            <Col
+                                key={data.id}
+                                className="mb-4"
+                                onClick={(e) => handleShowModal(e, data)}
+                            >
+                                <Card key={data.id} className=" col-size shadow-lg">
+                                    <Card.Img
+                                        src={`data:image/png;base64, ${data.image}`}/>
+                                </Card>
+                            </Col>
+                        ))}
+                    </Row>
+                </Col>
+
+                {pageAndButton.buttonState && (
+                    <Button variant="success"
+                            className="text-center"
+                            onClick={handleGetMorePosts}>Show more</Button>
+                )}
+
+                {selectedPost && (
+                    <PostDetails
+                        post={selectedPost}
+                        onClose={() => {
+                            setSelectedPost(null);
+                            document.body.style.overflow = "auto"
+                        }}/>
+                )}
+            </Row>
         </Container>
     )
 }
 
 export default UserProfile;
-
-
-
-// с помощью реакт бустстрап мне нужно создать страницу на которая будет отображать профиль пользователя
-//
-// требования к старнице:
-// 1. в первом ряду должно быть фото в кружку и с права от фото должна быть информация про пользователя.
-// 2.Под первым рядом должны идти посты пользователя (тоесть каждый пост имеет картикну и какуюто информацию. Мне нужно что б все посты были по 3 штуки в ряду и отображалась на странице только картинка)

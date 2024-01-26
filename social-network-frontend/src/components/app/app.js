@@ -12,6 +12,8 @@ import PostCreate from "../post-create";
 function App() {
     const {token}= useAuth();
     // const token = true; //todo : Temporary stub!!!!!!!!!!!!!!
+
+
     return (
         <>
             {token && <Header/>}

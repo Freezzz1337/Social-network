@@ -33,7 +33,7 @@ public class PostService {
 
         post.setCaption(newPost.getCaption());
         post.setImage(convertToByteArray(newPost.getImage()));
-        post.setCreate_at(new Timestamp(System.currentTimeMillis()));
+        post.setCreateAt(new Timestamp(System.currentTimeMillis()));
         post.setUser(currentUser);
 
         postRepository.save(post);

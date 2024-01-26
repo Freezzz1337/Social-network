@@ -19,10 +19,15 @@ const Header = () => {
 
     const handleLogout = () => {
         logout();
+        navigate("/");
     }
 
     const handleCreatePost = () => {
         navigate("/createPost");
+    }
+
+    const handleUserProfile = () => {
+        navigate("/userProfile")
     }
 
     return (
@@ -37,7 +42,7 @@ const Header = () => {
                             <Nav.Link>Explore</Nav.Link>
                             <Nav.Link>Notifications</Nav.Link>
                             <Nav.Link onClick={handleCreatePost}>Create Post</Nav.Link>
-                            <Nav.Link>Profile</Nav.Link>
+                            <Nav.Link onClick={handleUserProfile}>Profile</Nav.Link>
                             <Nav.Link onClick={handleLogoutClick}>Log out</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
