@@ -8,9 +8,10 @@ import Start from "../start";
 import {useAuth} from "../../context/auth-context";
 import UserProfile from "../user-profile";
 import PostCreate from "../post-create";
+import Search from "../search";
 
 function App() {
-    const {token}= useAuth();
+    const {token} = useAuth();
     // const token = true; //todo : Temporary stub!!!!!!!!!!!!!!
 
 
@@ -24,13 +25,13 @@ function App() {
                     <>
                         <Route path="/userProfile" element={<UserProfile/>}/>
                         <Route path="/createPost" element={<PostCreate/>}/>
+                        <Route path="/search" element={<Search/>}/>
                     </>
                 ) : (
                     <>
                         <Route path="/" element={<Start/>}/>
                         <Route path="/authorization" element={<Authorization/>}/>
                         <Route path="/registration" element={<Registration/>}/>
-
                     </>
                 )}
 

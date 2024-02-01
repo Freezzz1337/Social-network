@@ -24,6 +24,11 @@ const getMorePosts = async (token, page) => {
         .then(response => response.json());
 }
 
+const getUsersSearch = async (searchLine, token) => {
+    return await fetch(`${_api}user/search?searchLine=${searchLine}`, _requestOptionsGET(token))
+        .then(response => response.json());
+}
+
 const _requestOptionsPOST = (formData, token = "") => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -49,5 +54,6 @@ export {
     registration,
     createNewPost,
     getUserData,
-    getMorePosts
+    getMorePosts,
+    getUsersSearch
 };

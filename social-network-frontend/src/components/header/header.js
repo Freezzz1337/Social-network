@@ -27,7 +27,11 @@ const Header = () => {
     }
 
     const handleUserProfile = () => {
-        navigate("/userProfile")
+        navigate("/userProfile");
+    }
+
+    const handleSearch = () => {
+        navigate("/search");
     }
 
     return (
@@ -39,7 +43,7 @@ const Header = () => {
                     <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
                         <Nav className="ml-auto">
                             <Nav.Link>Home</Nav.Link>
-                            <Nav.Link>Explore</Nav.Link>
+                            <Nav.Link onClick={handleSearch}>Explore</Nav.Link>
                             <Nav.Link>Notifications</Nav.Link>
                             <Nav.Link onClick={handleCreatePost}>Create Post</Nav.Link>
                             <Nav.Link onClick={handleUserProfile}>Profile</Nav.Link>

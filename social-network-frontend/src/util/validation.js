@@ -18,14 +18,14 @@ const authorizationValidation = (formData) => {
 const registrationValidation = (formData) => {
     const errors = {};
 
-    if (!errors.fullName) {
-        errors.fullName = "The email field should not be empty";
+    if (!formData.fullName) {
+        errors.fullName = "The username field should not be empty";
     }
-    if (!errors.email) {
+    if (!formData.email) {
         errors.email = "The email field should not be empty";
     }
-    if (!errors.password) {
-        errors.password = "The email field should not be empty";
+    if (!formData.password) {
+        errors.password = "The password field should not be empty";
     }
     if (formData.password.length < 8) {
         errors.password = "The password must be at least 8 characters";

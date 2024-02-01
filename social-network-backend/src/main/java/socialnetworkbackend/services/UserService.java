@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import socialnetworkbackend.dto.MorePostsDto;
 import socialnetworkbackend.dto.UserMeResponseDto;
+import socialnetworkbackend.dto.UserSearchDto;
 import socialnetworkbackend.models.Post;
 import socialnetworkbackend.models.User;
 import socialnetworkbackend.repository.PostRepository;
 import socialnetworkbackend.repository.UserRepository;
+import socialnetworkbackend.util.UserNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,5 +69,19 @@ public class UserService {
         return new ArrayList<>(userRepository.findAll());
     }
 
+    public List<UserSearchDto> getUsersSearch(String searchLine) {
+        List<User> usersSearchList = userRepository.findAllByFullNameContaining(searchLine);
 
+        if (usersSearchList.isEmpty()) {
+            throw new UserNotFoundException(searchLine);
+        }
+
+        return usersSearchList.stream()
+                .map(user -> {
+                    UserSearchDto usd = new UserSearchDto();
+                    usd.setFullName(user.getFullName());
+                    usd.setAvatar(user.getAvatar());
+                    return usd;
+                }).collect(Collectors.toList());
+    }
 }

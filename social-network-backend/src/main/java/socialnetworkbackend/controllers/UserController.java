@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import socialnetworkbackend.dto.MorePostsDto;
 import socialnetworkbackend.dto.UserMeResponseDto;
+import socialnetworkbackend.dto.UserSearchDto;
 import socialnetworkbackend.models.User;
 import socialnetworkbackend.services.UserService;
 
@@ -42,6 +43,12 @@ public class UserController {
     public ResponseEntity<List<User>> allUsers() {
         List<User> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
+    }
+
+
+    @GetMapping("/search")
+    public ResponseEntity<List<UserSearchDto>> getUsersSearch(@RequestParam String searchLine) {
+        return ResponseEntity.ok(userService.getUsersSearch(searchLine));
     }
 }
 

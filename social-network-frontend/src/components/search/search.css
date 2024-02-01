@@ -1,0 +1,17 @@
+.search-user-avatar{
+    height: 90px;
+    width: 90px;
+    object-fit: cover;
+}
+
+.selected {
+    background-color: white;
+    transition: background-color 0.3s;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+.selected:hover{
+    background-color: #ccc;
+}

@@ -10,6 +10,8 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import socialnetworkbackend.util.UserNotFoundException;
+import socialnetworkbackend.util.UserWithThisEmailAlreadyExistsException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -38,14 +40,23 @@ public class GlobalExceptionHandler {
         return createProblemDetail(HttpStatusCode.valueOf(403), exception.getMessage(), "The JWT token has expired");
     }
 
+    @ExceptionHandler(UserWithThisEmailAlreadyExistsException.class)
+    public ProblemDetail handleUserWithThisEmailAlreadyExistsException(UserWithThisEmailAlreadyExistsException exception) {
+        return createProblemDetail(HttpStatus.CONFLICT, exception.getMessage(), "A user with this email address already exists");
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ProblemDetail handleUserNotFoundException(UserNotFoundException exception) {
+        return createProblemDetail(HttpStatus.BAD_REQUEST, exception.getMessage(), exception.getMessage());
+    }
+
+
+
+
+
     @ExceptionHandler(Exception.class)
     public ProblemDetail handleGenericException(Exception exception) {
         return createProblemDetail(HttpStatusCode.valueOf(500), exception.getMessage(), "Unknown internal server error.");
-    }
-
-    @ExceptionHandler(RuntimeException.class)
-    public ProblemDetail handleTest(Exception exception) {
-        return createProblemDetail(HttpStatus.CONFLICT, exception.getMessage(), "A user with this email address already exists");
     }
 
     private ProblemDetail createProblemDetail(HttpStatusCode status, String detail, String description) {

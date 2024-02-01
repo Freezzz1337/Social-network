@@ -7,7 +7,7 @@ import {registration} from "../../services/auth-service";
 import {registrationValidation} from "../../util/validation";
 
 const Registration = () => {
-    const [fromData, setFromData] = useState({
+    const [formData, setFormData] = useState({
         fullName: "",
         email: "",
         password: "",
@@ -22,22 +22,22 @@ const Registration = () => {
     const handleChange = (e) => {
         if (e.target.type === "file") {
             convertFileToBase64(e.target.files[0], (base64String) => {
-                setFromData({...fromData, [e.target.name]: base64String})
+                setFormData({...formData, [e.target.name]: base64String})
             });
         } else {
-            setFromData({...fromData, [e.target.name]: e.target.value});
+            setFormData({...formData, [e.target.name]: e.target.value});
         }
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const newValidErrors = registrationValidation(fromData);
+        const newValidErrors = registrationValidation(formData);
         setValidErrors(newValidErrors);
 
         if (Object.keys(newValidErrors).length === 0) {
             try {
-                const serverResponse = await registration(JSON.stringify(fromData));
+                const serverResponse = await registration(JSON.stringify(formData));
                 if (serverResponse.response) {
                     navigate("/authorization");
                 } else {
