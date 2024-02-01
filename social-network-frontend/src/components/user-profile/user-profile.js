@@ -9,6 +9,7 @@ const UserProfile = () => {
     const {token} = useAuth();
     const [userData, setUserData] = useState(null);
     const [selectedPost, setSelectedPost] = useState(null);
+    const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
 
     const [pageAndButton, setPageAndButton] = useState({
         page: 1,
@@ -55,8 +56,10 @@ const UserProfile = () => {
         e.preventDefault();
 
         if (data) {
-            setSelectedPost(data);
             document.body.style.overflow = "hidden";
+            document.body.style.marginRight = scrollBarWidth + "px";
+            setSelectedPost(data);
+
         }
     }
 
@@ -114,6 +117,7 @@ const UserProfile = () => {
                         onClose={() => {
                             setSelectedPost(null);
                             document.body.style.overflow = "auto"
+                            document.body.style.marginRight = ""
                         }}/>
                 )}
             </Row>
